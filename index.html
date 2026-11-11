@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>《线性代数》交互式 3D 教学仿真实验平台 | SG01047 机器人工程专业</title>
+  <meta name="description" content="依据深圳技术大学中德智能制造学院《线性代数》(SG01047)课程教学大纲打造的交互式 WebGL 3D 教学仿真实验平台，覆盖全6章31个核心实验案例。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><text x='32' y='43' font-size='28' font-family='sans-serif' font-weight='bold' text-anchor='middle' fill='white'>LA</text></svg>" />
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <!-- ==================== 顶部导航栏（含章节级联下拉菜单 & 全目录分组下拉菜单） ==================== -->
+  <header class="top-navbar">
+    <div class="brand-area">
+      <div class="brand-cube-icon" aria-hidden="true">3D</div>
+      <div class="brand-titles">
+        <h1>《线性代数》交互式 3D 仿真实验平台</h1>
+        <div class="brand-sub">深圳技术大学 · 中德智能制造学院 · SG01047（机器人工程）</div>
+      </div>
+    </div>
+
+    <!-- 按章节级联下拉菜单选择器 -->
+    <nav class="selector-bar" aria-label="章节与实验案例选择">
+      <button type="button" id="btn-prev-case" class="icon-nav-btn" title="切换到上一个实验案例">◀ 上一节</button>
+
+      <div class="select-group">
+        <label for="chapter-select" class="select-prefix">课程章节</label>
+        <select id="chapter-select" class="nav-select" aria-label="选择课程章节"></select>
+      </div>
+
+      <div class="select-group">
+        <label for="case-select" class="select-prefix">实验案例</label>
+        <select id="case-select" class="nav-select" aria-label="选择本章实验案例"></select>
+      </div>
+
+      <button type="button" id="btn-next-case" class="icon-nav-btn" title="切换到下一个实验案例">下一节 ▶</button>
+    </nav>
+
+    <!-- 右侧工具按钮与全章节手风琴下拉菜单 -->
+    <div class="toolbar-actions">
+      <div class="mega-dropdown-wrap">
+        <button type="button" id="btn-mega-dropdown" class="icon-nav-btn" title="按章节展开全部实验案例目录">
+          📂 章节案例总菜单 ▾
+        </button>
+        <div id="mega-dropdown-panel" class="mega-dropdown-panel" role="menu"></div>
+      </div>
+
+      <button type="button" id="btn-syllabus-modal" class="icon-nav-btn" title="查看课程教学大纲完整映射表">
+        📋 大纲对照表
+      </button>
+
+      <button type="button" id="btn-theme-toggle" class="icon-nav-btn" title="切换深空科研模式 / 课堂投影明亮模式">
+        ☀️ 课堂投影模式
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== 主工作区：左侧 3D 交互实验视口 + 右侧参数控制与实时数学推演 ==================== -->
+  <main class="workspace-layout">
+    <!-- 左侧：当前章节案例说明横幅 + WebGL 3D 视口 -->
+    <section class="stage-column" aria-label="三维几何仿真视口">
+      <div class="case-banner">
+        <div class="banner-badges">
+          <span id="case-badge-code" class="badge-pill">第一章 · 实验 1.1</span>
+          <span id="case-badge-week" class="badge-pill amber">第 1 周</span>
+          <span id="case-badge-obe" class="badge-pill emerald">OBE：理解 &amp; 掌握</span>
+        </div>
+        <h2 id="case-title" class="banner-title">加载中…</h2>
+        <div id="case-syllabus-desc" class="banner-meta"></div>
+        <div id="case-robotics-desc" class="banner-robotics"></div>
+      </div>
+
+      <div class="viewport-wrapper">
+        <div id="viewport-3d"></div>
+
+        <!-- 3D 相机视角预设工具条 -->
+        <div class="cam-toolbar" role="toolbar" aria-label="三维相机视角切换">
+          <button type="button" class="cam-btn" data-cam="iso">复位 3D 视角</button>
+          <button type="button" class="cam-btn" data-cam="xy">XY 俯视</button>
+          <button type="button" class="cam-btn" data-cam="xz">XZ 正视</button>
+          <button type="button" class="cam-btn" data-cam="yz">YZ 侧视</button>
+          <button type="button" class="cam-btn" data-cam="autorotate">🔄 自动环绕</button>
+        </div>
+
+        <div class="viewport-hint">
+          🖱️ 左键拖拽旋转 · 右键/Shift平移 · 滚轮缩放 · 双击复位（右手坐标系 Z轴向上）
+        </div>
+      </div>
+    </section>
+
+    <!-- 右侧：实验交互调参面板 + 实时符号/数值推演面板 -->
+    <aside class="inspector-column" aria-label="实验参数调节与代数推导面板">
+      <section class="panel-section">
+        <h3 class="section-heading">🎛️ 实验交互控制与矩阵编辑</h3>
+        <div id="controls-container"></div>
+      </section>
+
+      <section class="panel-section">
+        <h3 class="section-heading">📐 实时数学推演与几何本质解析</h3>
+        <div id="math-container"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- ==================== 课程教学大纲 18 周完整映射弹窗 ==================== -->
+  <div id="syllabus-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title-syl">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title-syl">📚《线性代数》(SG01047) 教学大纲与 3D 仿真案例全覆盖对照表</h3>
+        <button type="button" id="btn-close-modal" class="icon-nav-btn">✕ 关闭</button>
+      </div>
+      <div id="syllabus-modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 按序加载零构建依赖模块化脚本（兼容本地直接打开与 GitHub Pages 静态托管） -->
+  <script src="./js/math-core.js"></script>
+  <script src="./js/renderer3d.js"></script>
+  <script src="./js/ui-formatter.js"></script>
+  <script src="./js/chapters-ch1-ch2.js"></script>
+  <script src="./js/chapters-ch3-ch4.js"></script>
+  <script src="./js/chapters-ch5-ch6.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
