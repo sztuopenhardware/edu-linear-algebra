@@ -60,14 +60,24 @@
     <!-- 左侧：当前章节案例说明横幅 + WebGL 3D 视口 -->
     <section class="stage-column" aria-label="三维几何仿真视口">
       <div class="case-banner">
-        <div class="banner-badges">
-          <span id="case-badge-code" class="badge-pill">第一章 · 实验 1.1</span>
-          <span id="case-badge-week" class="badge-pill amber">第 1 周</span>
-          <span id="case-badge-obe" class="badge-pill emerald">OBE：理解 &amp; 掌握</span>
+        <div class="case-banner-main">
+          <div class="banner-badges">
+            <span id="case-badge-code" class="badge-pill">第一章 · 实验 1.1</span>
+            <span id="case-badge-week" class="badge-pill amber">第 1 周</span>
+            <span id="case-badge-obe" class="badge-pill emerald">OBE：理解 &amp; 掌握</span>
+          </div>
+          <h2 id="case-title" class="banner-title">加载中…</h2>
+          <div id="case-syllabus-desc" class="banner-meta"></div>
+          <div id="case-robotics-desc" class="banner-robotics"></div>
         </div>
-        <h2 id="case-title" class="banner-title">加载中…</h2>
-        <div id="case-syllabus-desc" class="banner-meta"></div>
-        <div id="case-robotics-desc" class="banner-robotics"></div>
+
+        <div class="case-banner-credit" aria-label="课程教研团队信息">
+          <img src="./assets/sztu-logo.png" alt="深圳技术大学校徽" class="sztu-logo-img" />
+          <div class="credit-text">
+            <div class="credit-org">线性代数教研组</div>
+            <div class="credit-authors">宋秋明 陈宇龙</div>
+          </div>
+        </div>
       </div>
 
       <div class="viewport-wrapper">
